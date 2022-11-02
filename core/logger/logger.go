@@ -8,7 +8,7 @@ import (
 var Log *zap.Logger
 
 func InitializeLogger(config LoggerConfig)  {
-	if config.isProductionMode {
+	if config.IsProductionMode {
 		Log, _ = zap.NewProduction()
 	} else {
 		Log, _ = zap.NewDevelopment()
@@ -38,5 +38,5 @@ func (v contextProvider) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 
 // LoggerConfig defines the config for middleware.
 type LoggerConfig struct {
-	isProductionMode bool
+	IsProductionMode bool
 }

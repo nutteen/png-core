@@ -5,7 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 	"os"
-	"png-core/core/logger"
+	"github.com/nutteen/png-core/v3/core/logger"
 	"strconv"
 	"sync"
 	"sync/atomic"

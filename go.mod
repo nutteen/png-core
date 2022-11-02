@@ -1,4 +1,4 @@
-module png-core
+module png-core/v2
 
 go 1.19
 

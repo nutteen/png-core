@@ -1,4 +1,4 @@
-module png-core/v2
+module github.com/nutteen/png-core
 
 go 1.19
 

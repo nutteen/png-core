@@ -88,6 +88,18 @@ func NewLogger(logger *zap.Logger, config ...LoggerConfig) fiber.Handler {
 			}
 		}
 
+		// Extract request body
+		requestBody := "-"
+		if request := c.Request(); request != nil {
+			requestBody = request.String()
+		}
+
+		// Extract response body
+		responseBody := "-"
+		if response := c.Response(); response != nil {
+			responseBody = response.String()
+		}
+
 		// Prepare fields
 		fields := []zap.Field {
 			zap.String("timestamp", timestamp.Load().(string)),
@@ -102,6 +114,8 @@ func NewLogger(logger *zap.Logger, config ...LoggerConfig) fiber.Handler {
 			zap.String("user_agent", c.Get(fiber.HeaderUserAgent)),
 			zap.String("pid", pid),
 			zap.String("request_id", requestIdStr),
+			zap.String("request_body", requestBody),
+			zap.String("response_body", responseBody),
 		}
 
 		n := c.Response().StatusCode()

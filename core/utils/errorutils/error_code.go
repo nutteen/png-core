@@ -1,4 +1,4 @@
-package errors
+package errorutils
 
 var (
 	GENERIC_ERROR = NewErrorCode("G00001", "Generic exception")

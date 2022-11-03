@@ -5,14 +5,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 	"os"
-	"github.com/nutteen/png-core/v3/core/logger"
 	"strconv"
 	"sync"
 	"sync/atomic"
 	"time"
 )
 
-func NewLogger(config ...LoggerConfig) fiber.Handler {
+func NewLogger(logger *zap.Logger, config ...LoggerConfig) fiber.Handler {
 	// Set default config
 	cfg := configDefault(config...)
 
@@ -108,13 +107,13 @@ func NewLogger(config ...LoggerConfig) fiber.Handler {
 		n := c.Response().StatusCode()
 		switch {
 		case n >= 500:
-			logger.Log.With(zap.Error(err)).Error("Server error", fields...)
+			logger.With(zap.Error(err)).Error("Server error", fields...)
 		case n >= 400:
-			logger.Log.With(zap.Error(err)).Warn("Client error", fields...)
+			logger.With(zap.Error(err)).Warn("Client error", fields...)
 		case n >= 300:
-			logger.Log.Info("Redirection", fields...)
+			logger.Info("Redirection", fields...)
 		default:
-			logger.Log.Info("Success", fields...)
+			logger.Info("Success", fields...)
 		}
 
 		// End chain

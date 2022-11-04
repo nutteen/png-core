@@ -103,17 +103,17 @@ func NewLogger(logger *zap.Logger, config ...LoggerConfig) fiber.Handler {
 
 		// Prepare fields
 		fields := []zap.Field {
-			zap.String("timestamp", timestamp.Load().(string)),
+			//zap.String("timestamp", timestamp.Load().(string)),
 			zap.String("latency", fmt.Sprintf("%v", stop.Sub(start).Round(time.Millisecond))),
 			zap.String("hostname", c.Hostname()),
 			zap.String("ip", c.IP()),
-			zap.String("status_code", fmt.Sprintf("%3d", c.Response().StatusCode())),
+			//zap.String("status_code", fmt.Sprintf("%3d", c.Response().StatusCode())),
 			zap.String("method", c.Method()),
 			zap.String("path", c.Path()),
 			zap.String("error", chainErrStr),
 			zap.String("url", c.OriginalURL()),
 			zap.String("user_agent", c.Get(fiber.HeaderUserAgent)),
-			zap.String("pid", pid),
+			//zap.String("pid", pid),
 			zap.String("request_id", requestIdStr),
 			zap.String("request_body", requestBody),
 			zap.String("response_body", responseBody),

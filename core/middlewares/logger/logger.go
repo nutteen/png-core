@@ -88,17 +88,16 @@ func NewLogger(logger *zap.Logger, config ...LoggerConfig) fiber.Handler {
 			}
 		}
 
-
 		// Extract request body
 		requestBody := "-"
 		if request := c.Request(); request != nil {
-			requestBody = string(c.Request().Body())
+			requestBody = request.String()
 		}
 
 		// Extract response body
 		responseBody := "-"
 		if response := c.Response(); response != nil {
-			responseBody = string(c.Response().Body())
+			responseBody = response.String()
 		}
 
 		// Prepare fields

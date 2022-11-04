@@ -1,14 +1,14 @@
 package logger
 
 import (
-	"fmt"
-	"github.com/gofiber/fiber/v2"
-	"go.uber.org/zap"
 	"os"
 	"strconv"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
 )
 
 func NewLogger(logger *zap.Logger, config ...LoggerConfig) fiber.Handler {
@@ -88,31 +88,32 @@ func NewLogger(logger *zap.Logger, config ...LoggerConfig) fiber.Handler {
 			}
 		}
 
+
 		// Extract request body
 		requestBody := "-"
 		if request := c.Request(); request != nil {
-			requestBody = request.String()
+			requestBody = string(c.Request().Body())
 		}
 
 		// Extract response body
 		responseBody := "-"
 		if response := c.Response(); response != nil {
-			responseBody = response.String()
+			responseBody = string(c.Response().Body())
 		}
 
 		// Prepare fields
 		fields := []zap.Field {
-			//zap.String("timestamp", timestamp.Load().(string)),
-			zap.String("latency", fmt.Sprintf("%v", stop.Sub(start).Round(time.Millisecond))),
+			zap.Time("timestamp", timestamp.Load().(time.Time)),
+			zap.Duration("latency",  stop.Sub(start).Round(time.Millisecond)),
 			zap.String("hostname", c.Hostname()),
 			zap.String("ip", c.IP()),
-			//zap.String("status_code", fmt.Sprintf("%3d", c.Response().StatusCode())),
+			zap.Int("status_code", c.Response().StatusCode()),
 			zap.String("method", c.Method()),
 			zap.String("path", c.Path()),
 			zap.String("error", chainErrStr),
 			zap.String("url", c.OriginalURL()),
 			zap.String("user_agent", c.Get(fiber.HeaderUserAgent)),
-			//zap.String("pid", pid),
+			zap.String("pid", pid),
 			zap.String("request_id", requestIdStr),
 			zap.String("request_body", requestBody),
 			zap.String("response_body", responseBody),

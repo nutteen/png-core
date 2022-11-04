@@ -2,13 +2,10 @@ package db
 
 import (
 	"fmt"
-
-	"gorm.io/gorm/logger"
-
-	"log"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"log"
 )
 
 type Config struct {
@@ -18,6 +15,7 @@ type Config struct {
 	Password      string
 	DBName        string
 	SSLMode       string
+	TimeZone		string
 	GormLogEnable bool
 }
 
@@ -33,7 +31,7 @@ func New(cfg Config) *gorm.DB {
 	// dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
 	// db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
-	db, err := gorm.Open(postgres.Open(fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v sslmode=%v TimeZone=Asia/Bangkok", cfg.Host, cfg.Username, cfg.Password, cfg.DBName, cfg.Port, cfg.SSLMode)), &gorm.Config{
+	db, err := gorm.Open(postgres.Open(fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v sslmode=%v TimeZone=%v", cfg.Host, cfg.Username, cfg.Password, cfg.DBName, cfg.Port, cfg.SSLMode, cfg.TimeZone)), &gorm.Config{
 		Logger: gormLogger,
 	})
 

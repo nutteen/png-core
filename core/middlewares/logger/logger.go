@@ -88,7 +88,6 @@ func NewLogger(logger *zap.Logger, config ...LoggerConfig) fiber.Handler {
 			}
 		}
 
-
 		// Extract request body
 		requestBody := "-"
 		if request := c.Request(); request != nil {
@@ -103,7 +102,7 @@ func NewLogger(logger *zap.Logger, config ...LoggerConfig) fiber.Handler {
 
 		// Prepare fields
 		fields := []zap.Field {
-			zap.Time("timestamp", timestamp.Load().(time.Time)),
+			zap.String("timestamp", timestamp.Load().(string)),
 			zap.Duration("latency",  stop.Sub(start).Round(time.Millisecond)),
 			zap.String("hostname", c.Hostname()),
 			zap.String("ip", c.IP()),

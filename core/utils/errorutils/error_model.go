@@ -54,8 +54,18 @@ type ValidationErrorResponseModel struct {
 }
 
 type ValidationErrorModel struct {
-	// Base error model
-	ErrorModel ErrorModel
+	// an error code that is numeric presentation of the error type
+	Code string `json:"code"`
+	// error type
+	Type string `json:"type"`
+	// a short, human-readable summary of the problem type
+	Title string `json:"title"`
+	// http status code
+	Status int `json:"status"`
+	// a human-readable explanation specific to this occurrence of the problem
+	Detail string `json:"detail"`
+	// A URI reference that identifies the specific resource that cause the problem
+	Instance string `json:"Instance"`
 	// Extension members
 	InvalidParams []ValidationInvalidParam `json:"invalidParams"`
 }
@@ -87,13 +97,11 @@ type ValidationErrorCode struct {
 func (e ValidationErrorCode) NewErrorResponseModel(errorDetail string, invalidParams []ValidationInvalidParam) *ValidationErrorResponseModel {
 	return &ValidationErrorResponseModel{
 		Error: ValidationErrorModel{
-			ErrorModel: ErrorModel{
-				Code: e.Code,
-				Type: e.Type,
-				Title: e.Title,
-				Status: e.Status,
-				Detail: errorDetail,
-			},
+			Code: e.Code,
+			Type: e.Type,
+			Title: e.Title,
+			Status: e.Status,
+			Detail: errorDetail,
 			InvalidParams: invalidParams,
 		},
 	}

@@ -114,7 +114,7 @@ func ValidationErrorsToInvalidParams(validationErrors validator.ValidationErrors
 	for _, validationError := range validationErrors {
 		invalidParam := ValidationInvalidParam{
 			Name: validationError.Field(),
-			Reason: validationError.Error(),
+			Reason: validationError.Tag(),
 		}
 		invalidParams = append(invalidParams, invalidParam)
 	}

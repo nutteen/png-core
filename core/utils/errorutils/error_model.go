@@ -1,5 +1,7 @@
 package errorutils
 
+import "github.com/go-playground/validator/v10"
+
 func NewErrorCode(code string, errorType string, title string, status int) *ErrorCode {
 	return &ErrorCode{
 		Code: code,
@@ -105,4 +107,16 @@ func (e ValidationErrorCode) NewErrorResponseModel(errorDetail string, invalidPa
 			InvalidParams: invalidParams,
 		},
 	}
+}
+
+func ValidationErrorsToInvalidParams(validationErrors validator.ValidationErrors) []ValidationInvalidParam {
+	var invalidParams []ValidationInvalidParam
+	for _, validationError := range validationErrors {
+		invalidParam := ValidationInvalidParam{
+			Name: validationError.Field(),
+			Reason: validationError.Error(),
+		}
+		invalidParams = append(invalidParams, invalidParam)
+	}
+	return invalidParams
 }

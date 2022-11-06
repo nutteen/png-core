@@ -48,7 +48,7 @@ type ErrorModel struct {
 	// a human-readable explanation specific to this occurrence of the problem
 	Detail string `json:"detail"`
 	// A URI reference that identifies the specific resource that cause the problem
-	Instance string `json:"Instance"`
+	Instance string `json:"instance"`
 }
 
 type ValidationErrorResponseModel struct {
@@ -67,7 +67,7 @@ type ValidationErrorModel struct {
 	// a human-readable explanation specific to this occurrence of the problem
 	Detail string `json:"detail"`
 	// A URI reference that identifies the specific resource that cause the problem
-	Instance string `json:"Instance"`
+	Instance string `json:"instance"`
 	// Extension members
 	InvalidParams []ValidationInvalidParam `json:"invalidParams"`
 }
